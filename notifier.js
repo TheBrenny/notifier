@@ -2,7 +2,9 @@ const notificationElement =
     `<div class="notification [[type]]">
         <div class="content">
             <p>[[message]]</p>
-            <div name="Delete" class="del">❌</div>
+            <button type="button" name="Delete" class="del">
+                <img draggable="false" src="${document.currentScript.src.slice(0, -("notifier.js".length))}img/cross.svg" alt="Delete">
+            </button>
         </div>
         <div class="timer"></div>
     </div>`;
