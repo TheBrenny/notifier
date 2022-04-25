@@ -15,6 +15,7 @@
 	position: fixed;
 	width: var(--width);
 	height: fit-content;
+	z-index: 9999;
 }
 
 #notifier-tray .notification {
