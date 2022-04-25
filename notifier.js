@@ -20,8 +20,9 @@ notifier.notify = (message, type, actions) => {
     type = ['info', 'success', 'warning', 'error'].includes(type) ? type : 'info';
 
     let id = notifier.idGen.next().value;
-    let notification = notificationElement.replace("[[type]]", type).replace("[[message]]", message)
-    notification = notifier.insertAdjacentHTML('afterBegin', notification);
+    let notification = notificationElement.replace("[[type]]", type).replace("[[message]]", message);
+    notification = new DOMParser().parseFromString(notification, "text/html").querySelector("body>*");
+    notifier.tray.insertAdjacentElement('afterBegin', notification);
 
     setTimeout(() => notification.classList.add('show'), 20);
 
