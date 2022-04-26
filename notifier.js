@@ -2,12 +2,34 @@ const notificationElement =
     `<div class="notification [[type]]">
         <div class="content">
             <p>[[message]]</p>
+            <div style="flex-grow:1"></div>
             <button type="button" name="Delete" class="del">
                 <img draggable="false" src="${document.currentScript.src.slice(0, -("notifier.js".length))}img/cross.svg" alt="Delete">
             </button>
         </div>
         <div class="timer"></div>
     </div>`;
+
+function buildActions(id, actions) {
+    if(actions.length == 0) return "";
+
+    let actionButtons = document.createElement("div");
+    actionButtons.classList.add("notificationActions");
+    for(let action of actions) {
+        let button = document.createElement("button");
+        button.classList.add(action.type);
+        button.innerText = action.name;
+        button.name = action.name;
+        button.addEventListener("click", () => {
+            console.log("fired!");
+            action.action();
+            notifier.deleteNotification(id);
+        }, {once: true});
+        actionButtons.appendChild(button);
+    }
+
+    return actionButtons;
+}
 
 // Setup the notifier
 const notifier = {};
@@ -22,9 +44,12 @@ notifier.notify = (message, type, actions) => {
     type = ['info', 'success', 'warning', 'error'].includes(type) ? type : 'info';
 
     let id = notifier.idGen.next().value;
-    let notification = notificationElement.replace("[[type]]", type).replace("[[message]]", message);
+    let notification = notificationElement
+        .replace("[[type]]", type)
+        .replace("[[message]]", message);
     notification = new DOMParser().parseFromString(notification, "text/html").querySelector("body>*");
-    notifier.tray.insertAdjacentElement('afterBegin', notification);
+    if((actions ?? []).length > 0) notification.querySelector(".del").insertAdjacentElement("beforeBegin", buildActions(id, actions))
+    notifier.tray.insertAdjacentElement('beforeEnd', notification);
 
     setTimeout(() => notification.classList.add('show'), 20);
 

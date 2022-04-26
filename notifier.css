@@ -1,6 +1,6 @@
 #notifier-tray {
 	--blue: #4b7ce6;
-	--green:#8acd6d;
+	--green: #8acd6d;
 	--yellow: #ffd147;
 	--red: #ff5b57;
 	--timer-bg: #ffffff80;
@@ -74,6 +74,7 @@
 #notifier-tray .notification .content {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	padding: 0.4em;
 }
 
@@ -82,24 +83,57 @@
 	margin: 0;
 }
 
-#notifier-tray .notification .content .del {
-	width: 20px;
-	height: 20px;
-	padding: 0;
-	margin: 0;
-	background: transparent;
-	cursor: pointer;
-	box-shadow: none;
-	
-	border: none;
-	border-radius: 5px;
-	
-	transition: all 0.5s ease;
-	cursor: pointer;
+#notifier-tray .notification .content .notificationActions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding-right: 0.2em;
+	gap: 0.2em;
+	flex-flow: row wrap;
 }
 
-#notifier-tray .notification .content .del:hover img {
-	filter: brightness(0.65);
+#notifier-tray .notification .content button {
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+	box-shadow: none;
+	border: none;
+	border-radius: 5px;
+	transition: all 0.5s ease;
+}
+
+#notifier-tray .notification .content button.info {
+	background: var(--blue);
+}
+
+#notifier-tray .notification .content button.success {
+	background: var(--green);
+}
+
+#notifier-tray .notification .content button.warning {
+	background: var(--yellow);
+}
+
+#notifier-tray .notification .content button.error {
+	background: var(--red);
+}
+
+#notifier-tray .notification .content button:not(.del) {
+	padding: 0.4em;
+}
+
+#notifier-tray .notification .content button:not(.del):hover {
+	filter: brightness(85%);
+}
+
+#notifier-tray .notification .content button.del {
+	width: 20px;
+	height: 20px;
+	background: transparent;
+}
+
+#notifier-tray .notification .content button.del:hover img {
+	filter: brightness(65%);
 }
 
 #notifier-tray .notification .timer {
